@@ -18,7 +18,6 @@
   - [訓練](#訓練)
   - [參數說明](#參數說明)
 - [輸出結果](#輸出結果)
-- [上傳 GitHub](#上傳-github)
 - [其他](#其他)
 
 ---
@@ -74,8 +73,8 @@
     --val_dir /path/to/val \
     --patch_size 64 \
     --scale 2 \
-    --batch_size 1024 \
-    --num_epochs 1700 \
+    --batch_size 512 \
+    --num_epochs 1000 \
     --initial_lr 0.001 \
     --device cuda:0 \
     --output_root ./output
@@ -88,10 +87,50 @@
     --val_dir /path/to/val \
     --resize 320,240 \
     --scale 2 \
-    --batch_size 1024 \
-    --num_epochs 1700 \
+    --batch_size 512 \
+    --num_epochs 1000 \
     --initial_lr 0.001 \
     --device cuda \
     --output_root ./output
   ```
 若有預訓練權重，則可加入 `--pretrain /path/to/pretrained_weights.pth`。
+
+### 參數說明
+
+- **`--dataset_type`**：選擇資料集模式  
+  - `patch`：使用隨機裁剪 patch 的 `ThermalDataset`  
+  - `full`：使用整張影像的 `FullImageThermalDataset`  
+
+- **`--train_dir`** 與 **`--val_dir`**：指定訓練與驗證資料夾的路徑。
+
+- **`--resize`**：僅在 `full` 模式下使用，格式必須為 `width,height`（例如 `320,240`）。
+
+- **`--patch_size`**：僅在 `patch` 模式下有效，指定每個 patch 的尺寸，預設為 `64`。
+
+- **`--scale`**：放大倍率，預設為 `2`（可設為 `3`）。
+
+- **`--batch_size`**：batch size，預設為 `1024`，請根據 GPU 記憶體調整。
+
+- **`--num_epochs`**：訓練的 epoch 數，預設為 `1700`。
+
+- **`--initial_lr`**：初始學習率，預設為 `0.001`。
+
+- **`--device`**：指定訓練裝置，例如 `cuda:0` 或 `cpu`。
+
+- **`--pretrain`**：預訓練權重檔案路徑，如有提供則會載入該權重。
+
+- **`--output_root`**：存放 checkpoint 與 log 的根目錄，程式會自動建立 `exp` 資料夾（例如 `exp0`, `exp1` 等）。
+- 
+## 輸出結果
+程式會在 `--output_root` 指定的資料夾中自動生成新的 `exp` 資料夾（例如 `./output/exp2`），其中包含：
+- **最佳模型權重檔案**：`ten_best.pth`
+- **Loss 記錄檔**：`loss_log.txt`（記錄每個 epoch 的 `train loss`、`val loss` 與 `耗時`）
+
+### Sample 結果圖
+
+每個 epoch 結束後，程式會從驗證資料集中隨機抽取 **4 個 sample**，並在 `./sample` 資料夾中儲存 **比較圖**，比較內容包括：
+- **低解析度輸入（LR）**
+- **模型預測結果（Pred）**
+- **Ground Truth（GT）**
+## 其他
+- **請根據實際 GPU 資源調整 `batch_size` 與 `num_workers`。**
