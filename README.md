@@ -57,10 +57,41 @@
    venv\Scripts\activate     # Windows
    ```
  
-2.**安裝依賴的套件：**
-```bash
-pip install -r requirements.txt
-```
+2. **安裝依賴的套件：**
+  ```bash
+  pip install -r requirements.txt
+  ```
 
-##使用說明
+## 使用說明
 本專案提供一個 train.py 作為主要訓練程式。你可以透過命令列參數來靈活設定各項超參數、資料集模式、GPU 裝置以及預訓練權重等。
+
+### 訓練
+範例 1： **使用 patch 模式進行訓練**
+  ```bash
+  python train.py \
+    --dataset_type patch \
+    --train_dir /path/to/train \
+    --val_dir /path/to/val \
+    --patch_size 64 \
+    --scale 2 \
+    --batch_size 1024 \
+    --num_epochs 1700 \
+    --initial_lr 0.001 \
+    --device cuda:0 \
+    --output_root ./output
+  ```
+範例 2：**使用 full 模式（整張影像），並指定影像尺寸為 320x240**
+  ```bash
+  python train.py \
+    --dataset_type full \
+    --train_dir /path/to/train \
+    --val_dir /path/to/val \
+    --resize 320,240 \
+    --scale 2 \
+    --batch_size 1024 \
+    --num_epochs 1700 \
+    --initial_lr 0.001 \
+    --device cuda \
+    --output_root ./output
+  ```
+若有預訓練權重，則可加入 `--pretrain /path/to/pretrained_weights.pth`。
