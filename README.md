@@ -1,5 +1,4 @@
-﻿# Thermal-Image-Enhancement
-# TEN: Thermal Image Enhancement using CNN
+﻿# TEN: Thermal Image Enhancement using CNN
 
 這個專案實作了[Thermal Image Enhancement using Convolutional Neural Network](https://ieeexplore.ieee.org/document/7759059)論文來提升低解析度熱影像品質的方法，旨在改善熱影像在物體偵測、導航等任務中的應用表現。專案支援兩種資料集模式：
 
