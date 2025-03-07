@@ -127,7 +127,7 @@
 - **Loss 記錄檔**：`loss_log.txt`（記錄每個 epoch 的 `train loss`、`val loss` 與 `耗時`）
 
 ### Sample 結果圖
-
+![114514](Images/epoch_114514_sample.png)
 每個 epoch 結束後，程式會從驗證資料集中隨機抽取 **4 個 sample**，並在 `./sample` 資料夾中儲存 **比較圖**，比較內容包括：
 - **低解析度輸入（LR）**
 - **模型預測結果（Pred）**
