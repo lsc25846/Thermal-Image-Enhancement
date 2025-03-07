@@ -121,7 +121,11 @@ def main():
             from collections import OrderedDict
             new_state_dict = OrderedDict()
             for k, v in checkpoint.items():
-                new_state_dict[k.replace("module.", "")] = v
+                # 如果鍵不以 "module." 開頭，就加上 "module." 前綴
+                if not k.startswith("module."):
+                    new_state_dict["module." + k] = v
+                else:
+                    new_state_dict[k] = v
             model.load_state_dict(new_state_dict)
         else:
             print(f"預訓練權重檔案 {args.pretrain} 不存在，將從頭訓練。")
